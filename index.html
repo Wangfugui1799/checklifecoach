@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Life Coach - 你的个人成长助手</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- 添加网站图标 -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- 添加字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 页面头部 -->
+    <header>
+        <div class="container">
+            <h1>AI Life Coach</h1>
+            <p class="tagline">你的个人成长伙伴，随时为你提供指导和建议</p>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="container">
+        <!-- 对话界面 -->
+        <section class="chat-container">
+            <!-- 消息历史区域 -->
+            <div class="messages" id="messageArea">
+                <!-- 欢迎消息 -->
+                <div class="message ai-message">
+                    <div class="message-content">
+                        <p>你好！我是你的AI Life Coach。我可以帮助你解决生活中的困惑，提供个人成长建议，或者只是陪你聊聊天。请告诉我你今天想聊些什么？</p>
+                    </div>
+                </div>
+                <!-- 消息将通过JavaScript动态添加 -->
+            </div>
+
+            <!-- 输入区域 -->
+            <div class="input-area">
+                <textarea id="userInput" placeholder="输入你的问题或想法..." rows="2"></textarea>
+                <button id="sendButton" class="send-button">
+                    <span>发送</span>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>© 2023 AI Life Coach. 基于火山方舟DeepSeek R1 API开发</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript文件 -->
+    <script src="script.js"></script>
+</body>
+</html>
