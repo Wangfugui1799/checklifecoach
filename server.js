@@ -11,7 +11,7 @@ const { Readable } = require('stream');
 
 // 创建Express应用
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
 
 // 中间件配置
 app.use(cors()); // 启用CORS，解决跨域问题
@@ -21,6 +21,11 @@ app.use(express.static('.')); // 提供静态文件服务
 // 火山方舟API配置
 const API_KEY = process.env.API_KEY || 'b9ee4020-8985-44fa-9cae-25a3986eb244';
 const API_URL = 'https://ark.cn-beijing.volces.com/api/v3/chat/completions';
+
+// 检查API密钥是否已正确配置
+if (API_KEY === 'your_api_key_here') {
+    console.error('警告: 使用了默认API密钥。请在.env文件中设置有效的API_KEY。');
+}
 
 // 系统提示词，定义AI的角色和行为
 const SYSTEM_PROMPT = `你是一位专业的Life Coach，你的目标是通过对话帮助用户成长和发展。
@@ -110,22 +115,47 @@ app.post('/api/chat', async (req, res) => {
         // 处理错误
         response.data.on('error', (err) => {
             console.error('流处理错误:', err);
-            res.status(500).end('处理请求时发生错误');
+            res.status(500).end('处理请求时发生错误: ' + err.message);
         });
 
     } catch (error) {
         console.error('API请求错误:', error);
+        // 记录更详细的错误信息
+        console.error('错误详情:', {
+            message: error.message,
+            stack: error.stack,
+            response: error.response ? {
+                status: error.response.status,
+                statusText: error.response.statusText,
+                data: error.response.data
+            } : 'No response data'
+        });
+        
         // 如果响应头已经发送，则直接结束响应
         if (res.headersSent) {
-            return res.end('处理请求时发生错误');
+            return res.end('处理请求时发生错误: ' + error.message);
         }
-        // 否则发送错误状态码和消息
-        res.status(500).json({ error: '处理请求时发生错误' });
+        
+        // 构建更有用的错误消息
+        let errorMessage = '处理请求时发生错误';
+        if (error.response) {
+            // API返回了错误响应
+            errorMessage = `API服务器返回错误 (${error.response.status}): ${error.response.statusText || error.message}`;
+        } else if (error.request) {
+            // 请求已发送但没有收到响应
+            errorMessage = '无法连接到API服务器，请检查网络连接和API服务状态';
+        } else {
+            // 请求设置时出错
+            errorMessage = `请求配置错误: ${error.message}`;
+        }
+        
+        // 发送错误状态码和详细消息
+        res.status(500).json({ error: errorMessage });
     }
 });
 
 // 启动服务器
 app.listen(PORT, () => {
     console.log(`服务器运行在 http://localhost:${PORT}`);
-    console.log('在浏览器中访问 http://localhost:3000 来使用AI Life Coach');
+    console.log(`在浏览器中访问 http://localhost:${PORT} 来使用AI Life Coach`);
 });

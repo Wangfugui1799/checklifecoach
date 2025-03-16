@@ -137,7 +137,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (error) {
             console.error('获取AI响应时出错:', error);
-            updateAIResponse('抱歉，我遇到了一些问题。请稍后再试。');
+            // 提供更详细的错误信息给用户
+            if (error.message === 'API请求失败') {
+                updateAIResponse('抱歉，API请求失败。可能的原因：<br>1. API密钥未正确配置<br>2. 服务器连接问题<br>3. API服务暂时不可用<br><br>请检查.env文件中的API_KEY配置，或联系管理员。');
+            } else {
+                updateAIResponse('抱歉，我遇到了一些问题：' + error.message + '<br>请稍后再试或联系管理员。');
+            }
         } finally {
             // 重置状态
             isWaitingForResponse = false;
