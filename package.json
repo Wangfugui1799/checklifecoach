@@ -1,6 +1,6 @@
 {
   "name": "ai-life-coach",
-  "version": "1.0.0",
+  "version": "0.1",
   "description": "基于火山方舟DeepSeek R1 API的AI Life Coach网站",
   "main": "server.js",
   "scripts": {

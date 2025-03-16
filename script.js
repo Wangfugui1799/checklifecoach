@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
     async function fetchAIResponse(userMessage) {
         try {
             // 发送请求到后端API
-            const response = await fetch('http://localhost:3000/api/chat', {
+            const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

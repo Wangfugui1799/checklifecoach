@@ -19,7 +19,7 @@ app.use(express.json()); // 解析JSON请求体
 app.use(express.static('.')); // 提供静态文件服务
 
 // 火山方舟API配置
-const API_KEY = 'b9ee4020-8985-44fa-9cae-25a3986eb244';
+const API_KEY = process.env.API_KEY || 'b9ee4020-8985-44fa-9cae-25a3986eb244';
 const API_URL = 'https://ark.cn-beijing.volces.com/api/v3/chat/completions';
 
 // 系统提示词，定义AI的角色和行为
