@@ -19,12 +19,12 @@ app.use(express.json()); // 解析JSON请求体
 app.use(express.static('.')); // 提供静态文件服务
 
 // 火山方舟API配置
-const API_KEY = process.env.API_KEY || 'b9ee4020-8985-44fa-9cae-25a3986eb244';
+const API_KEY = process.env.API_KEY;
 const API_URL = 'https://ark.cn-beijing.volces.com/api/v3/chat/completions';
 
 // 检查API密钥是否已正确配置
-if (API_KEY === 'your_api_key_here') {
-    console.error('警告: 使用了默认API密钥。请在.env文件中设置有效的API_KEY。');
+if (!API_KEY) {
+    console.error('错误: 未找到API密钥。请确保在环境变量中设置了有效的API_KEY。');
 }
 
 // 系统提示词，定义AI的角色和行为
